@@ -14,12 +14,12 @@ import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 // import TextField from '@mui/material/TextField';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,FormGroup, Checkbox, FormControlLabel,
-  FormLabel, } from '@mui/material';
+  FormLabel,IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 import { Radio, RadioGroup } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
-
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -76,7 +76,12 @@ const [serviceProviders, setServiceProviders] = useState([
 const [expandedPanel, setExpandedPanel] = useState(null);
 
 
+// ..............................................part 3...................................
+const [signatureImage, setSignatureImage] = useState(null);
 
+const handleSignatureChange = (event) => {
+  setSignatureImage(URL.createObjectURL(event.target.files[0]));
+};
 
 
 
@@ -1303,6 +1308,91 @@ label="All elements of the payment page(s) delivered to the consumer’s browser
         </Accordion>
 
         </Box>
+
+
+
+        <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel3-content" id="panel3-header">
+          <Typography variant="h5" component="h1" gutterBottom sx={{ color: 'text.secondary', my: 2 }}>
+            Part 3. PCI DSS Validation
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Accordion>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel3a-content" id="panel3a-header">
+             
+              <h2 style={{ fontSize: '1.2rem',fontWeight: 'bold' }}>3A. Merchant Attestation</h2>
+            </AccordionSummary>
+            <AccordionDetails>
+
+<div style={{display:'flex', flexDirection:'row',justifyContent: 'space-between', width: '100%'}}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, flex: '1 1 auto', marginRight: '16px' }}>
+  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <Typography variant="body1" component="div" sx={{ width: 'auto' }}>
+      Date:
+    </Typography>
+    <TextField
+      type="date"
+      className={classes.formField}
+      sx={{ width: 200 }}
+    />
+
+  </Box>
+  
+  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <Typography variant="body1" component="div" sx={{ width: 'auto' }}>
+      Merchant Executive Officer Name:
+    </Typography>
+    <TextField
+    label="Executive Officer Name"
+      className={classes.formField}
+      sx={{ width: 200 }}
+    />
+  </Box>
+  </Box>
+
+  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2,flex: '1 1 auto' }}>
+  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <Typography variant="body1" component="div" sx={{ width: 'auto' }}>
+      Title:
+    </Typography>
+    <TextField
+      className={classes.formField}
+      label="Title"
+      sx={{ width: 200 }}
+    />
+  </Box>
+  
+  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <Typography variant="body1" gutterBottom component="div" sx={{ width: 'auto' }}>
+      Signature of Merchant Executive Officer:
+    </Typography>
+    <Button
+      variant="contained"
+      component="label"
+      className={classes.uploadButton}
+      startIcon={<CloudUploadIcon />}
+    >
+      Upload Signature
+      <input
+        type="file"
+        hidden
+        accept="image/*"
+        onChange={handleSignatureChange}
+      />
+    </Button>
+    {signatureImage && (
+      <Box component="img" src={signatureImage} alt="Signature" sx={{ maxHeight: '100px', mt: 2, ml: 2 }} />
+    )}
+  </Box>
+</Box>
+</div>
+
+            </AccordionDetails>
+          </Accordion>
+        </AccordionDetails>
+      </Accordion>
+
 
 
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
